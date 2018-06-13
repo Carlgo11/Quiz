@@ -1,14 +1,14 @@
 <?php
 
 class Validate {
-  
+
   /*
    * match the user's answers to the answers from the questions table.
    * @param string $user_answers The user's answers.
    * @return int
    */
   public static function validateAnswers($user_answers) {
-    $correct_answers = Mysql::getAnswers();
+    $correct_answers = Mysql::getQuestions();
     $result = 0;
     foreach ($user_answers as $id => $answer) {
       if ($correct_answer = explode(",", $correct_answers[$id])) {
