@@ -1,6 +1,6 @@
 <?php
 
-namespace carlgo11\quiz;
+namespace carlgo11\quiz\Databases;
 
 use Exception;
 use mysqli;
@@ -9,6 +9,9 @@ class MySQL implements Database
 {
     private mysqli $mysqli;
 
+    /**
+     * @throws Exception
+     */
     private function makeConnection(): ?mysqli
     {
         $mysql = mysqli_init();
@@ -19,6 +22,9 @@ class MySQL implements Database
         return $mysql;
     }
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->mysqli = $this->makeConnection();
@@ -26,7 +32,7 @@ class MySQL implements Database
 
     public function __destruct()
     {
-        // TODO: Implement __destruct() method.
+        $this->mysqli->close();
     }
 
     public function __set(string $name, mixed $value)
@@ -41,6 +47,11 @@ class MySQL implements Database
 
     public function __debugInfo()
     {
-        // TODO: Implement __debugInfo() method.
+        return [
+            'ServerInfo' => $this->mysqli->get_server_info(),
+            'Connected' => $this->mysqli->get_connection_stats(),
+            'Errors' => $this->mysqli->error_list,
+            'Warnings' => $this->mysqli->get_warnings()
+        ];
     }
 }

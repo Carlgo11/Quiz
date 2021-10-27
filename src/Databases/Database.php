@@ -1,6 +1,6 @@
 <?php
 
-namespace carlgo11\quiz;
+namespace carlgo11\quiz\Databases;
 
 interface Database
 {
