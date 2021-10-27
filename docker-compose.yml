@@ -7,6 +7,8 @@ services:
       context: .
     restart: unless-stopped
     read_only: true
+    env_file:
+      - ./resources/MySQL.env
     volumes:
       - "./:/quiz"
     tmpfs:
@@ -33,6 +35,8 @@ services:
       - "mysql:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: password
+    env_file:
+      - ./resources/MySQL.env
 
 volumes:
   mysql:
