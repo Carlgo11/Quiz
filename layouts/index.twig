@@ -1,0 +1,7 @@
+{% extends 'default.twig' %}
+{% block title %}Questions{% endblock %}
+{% block content %}
+    {% for question in 1..questions %}
+    {% include('question.twig') %}
+    {% endfor %}
+{% endblock %}

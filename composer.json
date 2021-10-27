@@ -1,0 +1,10 @@
+{
+  "name": "carlgo11/quiz",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0-or-later",
+  "require": {
+    "twig/twig": ">= 2.0",
+    "ext-mysqli": "*",
+  }
+}

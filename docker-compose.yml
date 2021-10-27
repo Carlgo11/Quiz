@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+
+  backend:
+    build:
+      dockerfile: Docker/Backend.dockerfile
+      context: .
+    restart: unless-stopped
+    read_only: true
+    volumes:
+      - "./:/quiz"
+    tmpfs:
+      - /tmp
+
+  frontend:
+    build:
+      dockerfile: Docker/Frontend.dockerfile
+      context: .
+    restart: unless-stopped
+    volumes:
+      - "./resources/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./:/quiz:ro"
+    read_only: true
+    tmpfs:
+      - /tmp
+    ports:
+      - "8080:8080"
+
+  database:
+    image: linuxserver/mariadb:alpine
+    restart: unless-stopped
+    volumes:
+      - "mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+volumes:
+  mysql:
