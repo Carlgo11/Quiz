@@ -28,6 +28,7 @@ CREATE TABLE `questions` (
 
 
 ALTER TABLE `answers`
+    ADD UNIQUE KEY `group_id` (`group_id`,`question`),
     ADD KEY `group id` (`group_id`),
     ADD KEY `question id` (`question`);
 

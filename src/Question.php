@@ -4,18 +4,16 @@ namespace carlgo11\quiz;
 
 class Question
 {
-    private string $question;
-    private string $answer;
+    private int $question;
 
-    public function __construct(string $question, string $answer)
+    public function __construct(int $question)
     {
-        $this->question = filter_var($question, 257, ['options' => ['min_range' => 1]]);
-        $this->answer = filter_var($answer, 272, ['options' => ['regexp' => '/^([a-z])$/']]);
+        $this->question = intval(filter_var($question, 257, ['options' => ['min_range' => 1]]));
     }
 
-    public function __get(string $name): mixed
+    public function __toString(): string
     {
-        return $this->$name;
+        return $this->question;
     }
 
 }

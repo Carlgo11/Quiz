@@ -4,7 +4,7 @@
         <div class="row">
             {% for answer in 'a'..'c' %}
                 <input class="answer btn-check" type="radio" autocomplete="off" name="check-{{ question }}"
-                       id="check-{{ question }}-{{ answer }}">
+                       id="check-{{ question }}-{{ answer }}" {% if answers[question] == answer %}checked{% endif %}>
                 <label class="my-2 mx-md-2 col-12 col-md btn btn-lg btn-outline-primary"
                        for="check-{{ question }}-{{ answer }}">Answer {{ answer|capitalize }}</label>
             {% endfor %}

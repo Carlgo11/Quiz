@@ -2,6 +2,7 @@
 
 namespace carlgo11\quiz\Databases;
 
+use carlgo11\quiz\Answer;
 use carlgo11\quiz\Group;
 use carlgo11\quiz\Question;
 use Exception;
@@ -37,9 +38,26 @@ class MySQL implements Database
     }
 
 
-    public function getAnswers(Group $group)
+    public function getAnswers(int $group): array
     {
+        $query = $this->mysqli->prepare('SELECT `question`, `answer` FROM `answers` WHERE group_id = ?');
+        $query->bind_param('i', $group);
+        $query->execute();
+        $fetch = $query->get_result();
+        $result = [];
+        while ($row = $fetch->fetch_assoc()) {
+            $result[$row['question']] = $row['answer'];
+        }
+        return $result;
+    }
 
+    public function addAnswer(int $group, int $question, string $answer): bool
+    {
+        $query = $this->mysqli->prepare('INSERT INTO `answers` (group_id, question, answer) VALUE (?, ?, ?) ON DUPLICATE KEY UPDATE answer=?');
+        $query->bind_param('iiss', $group, $question, $answer, $answer);
+        $result = $query->execute();
+        $query->close();
+        return $result;
     }
 
     public function getQuestions(): array
@@ -49,7 +67,7 @@ class MySQL implements Database
         $fetch = $query->get_result();
         $result = [];
         while ($row = $fetch->fetch_assoc()) {
-            $question = new Question($row['question'], $row['answer']);
+            $question = new Question($row['question']);
             array_push($result, $question);
         }
         return $result;

@@ -11,8 +11,7 @@ switch ($method) {
     case 'GET':
         $loader = new FilesystemLoader([__DIR__ . '/../layouts', __DIR__ . '/../sections']);
         $twig = new Environment($loader);
-        echo($twig->render('auth.twig'));
-        break;
+        die($twig->render('auth.twig'));
     case 'POST':
         $mysql = new MySQL();
         $group = filter_input(INPUT_POST, 'group', 513);
@@ -22,6 +21,5 @@ switch ($method) {
         header("Location: /");
         die("");
     default:
-        echo "none";
-        break;
+        die("none");
 }
