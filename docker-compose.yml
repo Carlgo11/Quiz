@@ -29,12 +29,13 @@ services:
       - "8080:8080"
 
   database:
-    image: linuxserver/mariadb:alpine
+    image: mariadb:latest
     restart: unless-stopped
     volumes:
+      - "./resources/db.sql:/docker-entrypoint-initdb.d/db.sql"
       - "mysql:/var/lib/mysql"
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
     env_file:
       - ./resources/MySQL.env
 

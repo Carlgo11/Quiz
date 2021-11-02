@@ -9,9 +9,7 @@ interface Database
 
     public function __destruct();
 
-    public function __set(string $name, $value);
-
-    public function __get(?string $name);
+    public function getQuestions();
 
     public function __debugInfo();
 

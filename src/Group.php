@@ -6,7 +6,7 @@ class Group
 {
     private string $name;
     private array $participants;
-    public function __construct(string $name, array $participants)
+    public function __construct(int $id, string $name)
     {
 
     }

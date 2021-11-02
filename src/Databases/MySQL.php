@@ -2,6 +2,8 @@
 
 namespace carlgo11\quiz\Databases;
 
+use carlgo11\quiz\Group;
+use carlgo11\quiz\Question;
 use Exception;
 use mysqli;
 
@@ -12,14 +14,13 @@ class MySQL implements Database
     /**
      * @throws Exception
      */
-    private function makeConnection(): ?mysqli
+    private function makeConnection(): mysqli
     {
         $mysql = mysqli_init();
         if ($_ENV['MYSQL_OPTIONS']) $mysql->options($_ENV['MYSQL_OPTIONS']);
         if ($_ENV['MYSQL_TLS_KEY'] && $_ENV['MYSQL_TLS_CERT']) $mysql->ssl_set($_ENV['MYSQL_TLS_KEY'], $_ENV['MYSQL_TLS_CERT']);
-        $mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT'], NULL, 'utf8mb4');
-        if (!$mysql) throw new Exception(mysqli_error($mysql));
-        return $mysql;
+        $mysql->real_connect($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_PORT']);
+        return $mysql ? $mysql : throw new Exception(mysqli_error($mysql));
     }
 
     /**
@@ -27,7 +28,7 @@ class MySQL implements Database
      */
     public function __construct()
     {
-        $this->mysqli = $this->makeConnection();
+        return $this->mysqli = $this->makeConnection();
     }
 
     public function __destruct()
@@ -35,14 +36,43 @@ class MySQL implements Database
         $this->mysqli->close();
     }
 
-    public function __set(string $name, mixed $value)
+
+    public function getAnswers(Group $group)
     {
-        // TODO: Implement __set() method.
+
     }
 
-    public function __get(?string $name)
+    public function getQuestions(): array
     {
-        // TODO: Implement __get() method.
+        $query = $this->mysqli->prepare('SELECT `question`, `answer` FROM `questions`');
+        $query->execute();
+        $fetch = $query->get_result();
+        $result = [];
+        while ($row = $fetch->fetch_assoc()) {
+            $question = new Question($row['question'], $row['answer']);
+            array_push($result, $question);
+        }
+        return $result;
+    }
+
+    public function addGroup(string $name): bool
+    {
+        $query = $this->mysqli->prepare('INSERT INTO `groups` (`name`) VALUE (?)');
+        $query->bind_param('s', $name);
+        $result = $query->execute();
+        $query->close();
+        return $result;
+    }
+
+    public function getGroup(string $name): ?Group
+    {
+        $query = $this->mysqli->prepare('SELECT `id`, `name` FROM `groups` WHERE name = ?');
+        $query->bind_param('s', $name);
+        $query->execute();
+        $fetch = $query->get_result();
+        $row = $fetch->fetch_assoc();
+        if (isset($row['id']) && isset($row['name'])) return new Group($row['id'], $row['name']);
+        return null;
     }
 
     public function __debugInfo()

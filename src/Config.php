@@ -8,7 +8,7 @@ class Config
 
     public function __construct()
     {
-        $file = file_get_contents(__DIR__ . "/../../../config.json");
+        $file = file_get_contents(__DIR__ . "/../config.json");
         $this->_data = json_decode((string)$file);
         $this->_data = json_decode((string)$file);
     }
