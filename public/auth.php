@@ -9,17 +9,16 @@ $method = filter_input(5, 'REQUEST_METHOD', 513, ['flags' => 32]);
 
 switch ($method) {
     case 'GET':
+        $lang = json_decode(file_get_contents(__DIR__ . '/../language.json'));
         $loader = new FilesystemLoader([__DIR__ . '/../layouts', __DIR__ . '/../sections']);
         $twig = new Environment($loader);
-        die($twig->render('auth.twig'));
+        die($twig->render('auth.twig', ['lang' => $lang]));
     case 'POST':
         $mysql = new MySQL();
         $group = filter_input(INPUT_POST, 'group', 513);
         session_start();
         $_SESSION['group'] = $group;
         $_SESSION['new'] = $mysql->addGroup($group);
-        header("Location: /");
-        die("");
-    default:
-        die("none");
+        header('Location: /');
+        die('');
 }

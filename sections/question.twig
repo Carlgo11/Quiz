@@ -1,15 +1,14 @@
 <div class="question">
-    <h2 class="display-6 question-title">Question {{ question }}</h2>
+    <h2 class="display-6 question-title">{{ lang.question }} {{ question }}</h2>
     <div class="options container">
         <div class="row">
             {% for answer in 'a'..'c' %}
                 <input class="answer btn-check" type="radio" autocomplete="off" name="check-{{ question }}"
                        id="check-{{ question }}-{{ answer }}" {% if answers[question] == answer %}checked{% endif %}>
                 <label class="my-2 mx-md-2 col-12 col-md btn btn-lg btn-outline-primary"
-                       for="check-{{ question }}-{{ answer }}">Answer {{ answer|capitalize }}</label>
+                       for="check-{{ question }}-{{ answer }}">{{ lang.answer }} {{ answer|capitalize }}</label>
             {% endfor %}
         </div>
     </div>
     <hr>
-
 </div>

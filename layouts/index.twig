@@ -1,5 +1,5 @@
 {% extends 'default.twig' %}
-{% block title %}Questions{% endblock %}
+{% block title %}{{ lang.questions }}{% endblock %}
 {% block content %}
     {% for question in 1..questions %}
         {% include('question.twig') %}

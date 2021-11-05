@@ -2,7 +2,6 @@
 
 namespace carlgo11\quiz\Databases;
 
-use carlgo11\quiz\Answer;
 use carlgo11\quiz\Group;
 use carlgo11\quiz\Question;
 use Exception;
@@ -36,7 +35,6 @@ class MySQL implements Database
     {
         $this->mysqli->close();
     }
-
 
     public function getAnswers(int $group): array
     {
@@ -93,7 +91,7 @@ class MySQL implements Database
         return null;
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'ServerInfo' => $this->mysqli->get_server_info(),
