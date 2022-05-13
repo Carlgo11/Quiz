@@ -1,17 +1,39 @@
 ---
 layout: default
 ---
+{% assign language = site.data.language %}
+
+<!-- Modal -->
+<form class="modal fade" id="team-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ language.choose_team }}</h5>
+      </div>
+      <div class="modal-body">
+        <label for="team" class="form-label">{{ language.team_name }}</label>
+        <input type="text" aria-label="username" id="team" class="form-control" autofocus="" autocapitalize="on" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">{{ language.save }}</button>
+      </div>
+    </div>
+  </div>
+</form>
+
 {% for question in site.data.questions %}
 <div class="card my-4">
   {% assign answers = "A,B,C" | split: "," %}
-  <div class="card-header">Question {{ question[0] }}</div>
+  <div class="card-header">{{ language.question }} {{ question }}</div>
   <div class="card-body">
     {% for answer in answers %}
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="{{ answer }}" id="{{ question[0] }}-{{ answer }}">
-      <label class="form-check-label" for="{{ question[0] }}-{{ answer }}">{{answer }}</label>
+      <input class="form-check-input answer" type="checkbox" value="{{ answer }}" id="{{ question }}-{{ answer }}">
+      <label class="form-check-label" for="{{ question }}-{{ answer }}">{{ answer }}</label>
     </div>
     {% endfor %}
   </div>
 </div>
 {% endfor %}
+
+<button class="btn btn-success btn-lg" type="submit" id="send">{{ site.data.language.send }}</button>

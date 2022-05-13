@@ -3,3 +3,6 @@ plugins:
 jekyll_get_json:
   - data: questions
     json: https://quiz.carlgo11.workers.dev/
+exclude:
+  - .idea/
+  - vendor/
