@@ -3,17 +3,15 @@ layout: default
 ---
 {% assign language = site.data.language %}
 
-<!-- Modal -->
 <form class="modal fade" id="team-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ language.choose_team }}</h5>
+        <h5 class="modal-title">{{ language.choose_team }}</h5>
       </div>
       <div class="modal-body">
         <label for="team" class="form-label">{{ language.team_name }}</label>
-        <input type="text" aria-label="username" id="team" class="form-control" autofocus="" autocapitalize="on"
-               required>
+        <input type="text" aria-label="username" id="team" class="form-control" autocapitalize="on" required>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">{{ language.save }}</button>
@@ -21,6 +19,7 @@ layout: default
     </div>
   </div>
 </form>
+
 <div id="questions">
   {% for question in site.data.questions %}
   <div class="card my-4">
@@ -37,10 +36,9 @@ layout: default
   </div>
   {% endfor %}
 
-  <button class="btn btn-success btn-lg" type="submit" id="send">{{ site.data.language.send }}</button>
+  <button class="btn btn-success btn-lg" type="submit" id="send">{{ language.send }}</button>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="done">
   <div class="modal-dialog">
     <div class="modal-content">
