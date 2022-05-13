@@ -1,0 +1,17 @@
+---
+layout: default
+---
+{% for question in site.data.questions %}
+<div class="card my-4">
+  {% assign answers = "A,B,C" | split: "," %}
+  <div class="card-header">Question {{ question[0] }}</div>
+  <div class="card-body">
+    {% for answer in answers %}
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="{{ answer }}" id="{{ question[0] }}-{{ answer }}">
+      <label class="form-check-label" for="{{ question[0] }}-{{ answer }}">{{answer }}</label>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
