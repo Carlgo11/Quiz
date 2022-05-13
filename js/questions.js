@@ -1,26 +1,35 @@
 let user = window.localStorage.getItem('user');
 
-$(document).ready(function () {
+$(document).ready(async function () {
     if (user == null) {
         let team_modal = new bootstrap.Modal($('#team-modal'))
-        team_modal.show();
+        await team_modal.show();
     }
 })
+
 $('#team-modal').submit(() => {
     window.localStorage.setItem('user', $('#team').val());
 });
+
 let answers = JSON.parse(window.localStorage.getItem('answers')) || {};
 
-$('.form-check-input').click(function () {
+$('.form-check-input').click(async function () {
     const [question, answer] = $(this).attr('id').split('-');
     answers[question] = answer;
     window.localStorage.setItem('answers', JSON.stringify(answers));
     console.log(answer);
     console.log(question);
 })
-$('#send').click(function (){
-    sendAnswer().then(r => console.log(r));
+
+$('#send').click(async function () {
+    await sendAnswer().then(r => {
+        $('.card').hide();
+        $('#send').hide();
+        let done_modal = new bootstrap.Modal($('#done'))
+        done_modal.show();
+    });
 })
+
 async function sendAnswer() {
     const data = {user: user, answers: answers}
     $.ajax({
