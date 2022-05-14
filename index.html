@@ -28,8 +28,8 @@ layout: default
     <div class="card-body">
       {% for answer in answers %}
       <div class="form-check">
-        <input class="form-check-input answer" type="checkbox" value="{{ answer }}" id="{{ question }}-{{ answer }}">
-        <label class="form-check-label" for="{{ question }}-{{ answer }}">{{ answer }}</label>
+        <input class="form-check-input answer" type="checkbox" value="{{ answer }}" id="{{ question }}-{{ answer }}" readonly>
+        <label class="form-check-label" for="{{ question }}-{{ answer }}" >{{ language[answer] }}</label>
       </div>
       {% endfor %}
     </div>
@@ -37,14 +37,4 @@ layout: default
   {% endfor %}
 
   <button class="btn btn-success btn-lg" type="submit" id="send">{{ language.send }}</button>
-</div>
-
-<div class="modal fade" id="done">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h5>{{ language.done }}</h5>
-      </div>
-    </div>
-  </div>
 </div>

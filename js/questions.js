@@ -1,10 +1,19 @@
 let user = window.localStorage.getItem('user');
 let answers = JSON.parse(window.localStorage.getItem('answers')) || {};
-
+let disabled = window.localStorage.getItem('disabled');
 $(document).ready(async function () {
     if (user == null) {
         let team_modal = new bootstrap.Modal($('#team-modal'))
         await team_modal.show()
+    }
+    if (disabled) {
+        $('.answer').attr('disabled', true);
+        $('#send').hide();
+    }
+    if (answers) {
+        for (const [k, v] of Object.entries(answers)) {
+            $(`#${k}-${v}`).attr("checked", true)
+        }
     }
 })
 
@@ -20,9 +29,9 @@ $('.form-check-input').click(async function () {
 
 $('#send').click(() => {
     sendAnswer().then(r => {
-        $('.card,#send').hide();
-        let done_modal = new bootstrap.Modal($('#done'))
-        done_modal.show();
+        window.localStorage.setItem('disabled', true)
+        $('.answer').attr('disabled', true);
+        $('#send').hide();
     })
 })
 
