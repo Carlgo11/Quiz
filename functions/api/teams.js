@@ -57,7 +57,7 @@ export async function onRequestGet({request, env}) {
 }
 
 export async function onRequestPost({request, env}) {
-    return await storeAnswers(request,env )
+    return await storeAnswers(request, env)
 }
 
 export async function onRequestOptions() {

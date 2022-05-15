@@ -29,7 +29,7 @@ layout: default
       {% for answer in answers %}
       <div class="form-check">
         <input class="form-check-input answer" type="checkbox" value="{{ answer }}" id="{{ question }}-{{ answer }}" readonly>
-        <label class="form-check-label" for="{{ question }}-{{ answer }}" >{{ language[answer] }}</label>
+        <label class="form-check-label" for="{{ question }}-{{ answer }}">{{ language[answer] }}</label>
       </div>
       {% endfor %}
     </div>

@@ -38,7 +38,7 @@ $('#send').click(() => {
 async function sendAnswer() {
     const data = {user: user, answers: answers}
     $.ajax({
-        url: 'https://quiz.carlgo11.workers.dev/',
+        url: 'https://quiz.carlgo11.com/api/teams',
         method: 'POST',
         contentType: 'application/json',
         dataType: 'json',
