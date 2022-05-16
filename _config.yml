@@ -2,7 +2,10 @@ plugins:
   - jekyll-get-json
 jekyll_get_json:
   - data: questions
-    json: https://quiz.carlgo11.com/api/
+    json: https://quiz.carlgo11.com/api/questions
 exclude:
-  - .idea/
-  - vendor/
+  - .idea
+  - vendor
+  - Gemfile*
+  - package*
+  - node_modules
