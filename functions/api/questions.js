@@ -1,5 +1,5 @@
 export async function onRequestGet({env}) {
-  const data = await env.QUESTIONS.get('questions')
+  const data = await env.DB.get('questions')
   const keys = Object.keys(JSON.parse(data))
 
   return new Response(JSON.stringify(keys), {

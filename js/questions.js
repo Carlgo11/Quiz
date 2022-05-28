@@ -1,13 +1,9 @@
 let user = window.localStorage.getItem('user');
 let answers = JSON.parse(window.localStorage.getItem('answers')) || {};
-let disabled = window.localStorage.getItem('disabled');
 
 $(document).ready(async function () {
-  if (user == null) {
-    let team_modal = new bootstrap.Modal($('#team-modal'))
-    await team_modal.show()
-  }
-  if (disabled) {
+  if (user == null) await (new bootstrap.Modal($('#team-modal'))).show()
+  if (window.localStorage.getItem('disabled')) {
     $('.answer').attr('disabled', true);
     $('#send').hide();
   }
@@ -18,8 +14,9 @@ $(document).ready(async function () {
   }
 })
 
-$('#team-modal').submit(() => {
-  window.localStorage.setItem('user', $('#team').val())
+$('#t-submit').click(async () => {
+  const username = $('#team').val();
+  await requestUser(username)
 })
 
 $('.form-check-input').click(async function () {
@@ -36,13 +33,31 @@ $('#send').click(() => {
   })
 })
 
-async function sendAnswer() {
-  const data = {user: user, answers: answers}
+async function requestUser(username) {
+  const data = {user: username};
   $.ajax({
-    url: 'https://quiz.carlgo11.com/api/teams',
-    method: 'POST',
+    url: '/api/teams',
+    method: 'PUT',
     contentType: 'application/json',
     dataType: 'json',
     data: JSON.stringify(data)
+  }).done(function ({user, token}) {
+    window.localStorage.setItem('user', user)
+    window.localStorage.setItem('token', token)
+    window.location.reload()
+  })
+}
+
+async function sendAnswer() {
+  const data = {user: user, answers: answers}
+  $.ajax({
+    url: 'api/teams',
+    method: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify(data),
+    headers: {
+      Authorization: 'Bearer ' + window.localStorage.getItem('token')
+    }
   })
 }
