@@ -56,13 +56,13 @@ export async function onRequestPut({request, env}) {
     exp: Math.floor(Date.now() / 1000) + (2 * (60 * 60))
   }, secret)
   await env.DB.put(`user:${user}`, JSON.stringify({secret: secret, answers: {}}))
-  return new Response(JSON.stringify({user: user, token: token}))
+  return new Response(JSON.stringify({user: user, token: token}), {status: 201})
 }
 
 export async function onRequestPost({request, env}) {
   const {user, answers} = await request.json();
   if (await validateJWT())
     if (await logAnswers({user, answers}, env))
-      return new Response(null, {status: 201})
+      return new Response(null, {status: 202})
   return new Response(null, {status: 401})
 }
