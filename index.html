@@ -21,15 +21,16 @@ layout: default
 </form>
 
 <div id="questions">
-  {% for question in site.data.questions %}
+  {% for _q in site.data.questions %}
+  {% assign question = _q[0] %}
+  {% assign alternatives = _q[1] %}
   <div class="card my-4">
-    {% assign answers = "A,B,C" | split: "," %}
     <div class="card-header">{{ language.question }} {{ question }}</div>
     <div class="card-body">
-      {% for answer in answers %}
+      {% for alternative in alternatives %}
       <div class="form-check">
-        <input class="form-check-input answer" type="checkbox" value="{{ answer }}" id="{{ question }}-{{ answer }}" readonly>
-        <label class="form-check-label" for="{{ question }}-{{ answer }}">{{ language[answer] }}</label>
+        <input class="form-check-input answer" type="checkbox" value="{{ alternative }}" id="{{ question }}-{{ alternative }}" readonly>
+        <label class="form-check-label" for="{{ question }}-{{ alternative }}">{{ alternative }}</label>
       </div>
       {% endfor %}
     </div>
