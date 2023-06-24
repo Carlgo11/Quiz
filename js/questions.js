@@ -22,6 +22,7 @@ $('#t-submit').click(async () => {
 $('.form-check-input').click(async function () {
   const [question, answer] = $(this).attr('id').split('-')
   answers[question] = answer
+  console.log(`${question} ${answer}`)
   window.localStorage.setItem('answers', JSON.stringify(answers))
 })
 
@@ -41,17 +42,17 @@ async function requestUser(username) {
     contentType: 'application/json',
     dataType: 'json',
     data: JSON.stringify(data)
-  }).done(function ({user, token}) {
-    window.localStorage.setItem('user', user)
+  }).done(function ({token}) {
+    window.localStorage.setItem('user', username)
     window.localStorage.setItem('token', token)
     window.location.reload()
   })
 }
 
 async function sendAnswer() {
-  const data = {user: user, answers: answers}
+  const data = {answers: answers}
   $.ajax({
-    url: 'api/teams',
+    url: 'api/answers',
     method: 'POST',
     contentType: 'application/json',
     dataType: 'json',
