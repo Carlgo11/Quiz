@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    div.container
+        form(
+            action='/register'
+            method='post'
+            )
+            h1.text-center Choose A Team Name
+            hr
+            div.mb-3
+                label(
+                for='username'
+                class='form-label'
+
+                ) Team name
+                input(
+                name='username'
+                id='username'
+                class="form-control"
+                )
+            button(
+            type='submit'
+            class='btn btn-lg btn-success'
+            ) Continue
+

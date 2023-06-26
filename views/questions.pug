@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  div.container
+    form#questions(
+      action='/view'
+      method='post'
+    )
+      each options,question in questions
+        div(
+          class='card my-4'
+          )
+          div.card-header Question #{question}
+          div.card-body
+            each option in options
+              div.form-check
+                input(
+                  id=`${question}_${option}`
+                  name=question
+                  value=option
+                  class='form-check-input'
+                  type='radio'
+                )
+                label(
+                 for=`${question}_${option}`
+                 class='form-check-label'
+                ) #{option}
+      button(
+        class='btn btn-success btn-lg'
+        type='submit'
+      ) Submit

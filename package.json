@@ -1,0 +1,18 @@
+{
+  "name": "nodebootstraper",
+  "version": "5.3.0",
+  "dependencies": {
+    "body-parser": "*",
+    "cookie-session": "^2.0.0",
+    "express": "*",
+    "method-override": "*",
+    "morgan": "*",
+    "pug": "*",
+    "serve-favicon": "*",
+    "stylus": "*"
+  },
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  }
+}
