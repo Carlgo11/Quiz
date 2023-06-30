@@ -6,10 +6,8 @@ export const runtime = 'edge'
 
 export default async function Home() {
     const cookieStore = cookies();
-    const token = cookieStore.get('token');
-
+    const token = JSON.parse(cookieStore.get('token')?.value as string).token
     const questions = await getQuetsions(`${token}`);
-    // console.log(questions);
     return (
         <form>
             {Object.keys(questions).map((key) => (
@@ -32,26 +30,6 @@ export default async function Home() {
     )
 }
 
-async function getToken() {
-    const res = await fetch('https://quiz-7ff.pages.dev/api/teams', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            'user': "username1"
-        }),
-        cache: 'no-store'
-    })
-    // Recommendation: handle errors
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-    }
-
-    return res.json()
-}
 
 async function getQuetsions(token: string) {
     const res = await fetch('https://quiz-7ff.pages.dev/api/questions', {
