@@ -33,7 +33,7 @@ async function getAvailableQuestions(questionDB) {
         let questions = {}
         for (const k of (await questionDB.list({prefix: 'question:', type: 'json'})).keys) {
             const question = await questionDB.get(k.name, {type: 'json'})
-            questions[k.name] = question.options
+            questions[(k.name).replace('question:','')] = question.options
         }
         return questions
     } catch (error) {
