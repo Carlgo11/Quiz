@@ -1,5 +1,12 @@
 import jwt from "@tsndr/cloudflare-worker-jwt";
 
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "HEAD,PUT,OPTIONS",
+    "Access-Control-Max-Age": "86400",
+    "Access-Control-Allow-Headers": "Accept,Content-Type,Authorization"
+};
+
 /*
 // Get answers (and calculate the amount of correctly answered ones) for all users
 async function getUserResults(userDB) {
@@ -60,7 +67,7 @@ export async function onRequestGet({request, env}) {
     const userDB = env.USERS;
     const user = await validateJWT(request, userDB)
     if (!user) return new Response(null, {status: 401})
-    return new Response(JSON.stringify(getUserAnswers(user, userDB)))
+    return new Response(JSON.stringify(getUserAnswers(user, userDB)), {headers: corsHeaders})
 }
 
 // Upload answers
@@ -69,13 +76,21 @@ export async function onRequestPost({request, env}) {
     if (request.headers.get('Content-Type') !== 'application/json')
         return new Response(null, {status: 406, headers: {accept: 'application/json'}})
     const user = await validateJWT(request, userDB)
-    if (!user) return new Response(null, {status: 401})
+    if (!user) return new Response(null, {status: 401, headers: corsHeaders})
     const {answers} = await request.json();
     if (!answers) return new Response(JSON.stringify({error: 'Payload Missing'}), {
         status: 400,
         headers: {'content-type': 'application/json'}
     })
     if (await storeUserAnswers({user, answers}, userDB))
-        return new Response(null, {status: 204})
+        return new Response(null, {status: 204, headers: corsHeaders})
     return new Response(null, {status: 500})
+}
+
+export function onRequestOptions() {
+    return new Response(null, {status: 204, headers: corsHeaders})
+}
+
+export function onRequestHead() {
+    return new Response(null, {status: 204, headers: corsHeaders})
 }
