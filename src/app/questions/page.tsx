@@ -1,4 +1,5 @@
 import {cookies} from "next/headers"
+import {redirect} from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../layout'
 import Script from 'next/script'
@@ -12,10 +13,12 @@ class HttpError extends Error {
 }
 
 export default async function Home() {
+    let token = cookies().get('token')?.value as string
+    // Redirect to /register if token not set
+    if (!token) redirect('/redirect');
+    token = JSON.parse(token).token
     try {
-        const token = JSON.parse(cookies().get('token')?.value as string).token
         const questions = await getQuestions(`${token}`);
-
         return (
                 <form id="questions">
                     {Object.keys(questions).map((key: string) => (
@@ -37,12 +40,13 @@ export default async function Home() {
                             </div>
                     ))
                     }
-                    <Script src="/questions.js" async/>
+                    <p className="error text-danger-emphasis"></p>
+                    <button className="btn btn-success btn-lg" type="submit">Submit</button>
+                    <Script src="/questions.js"/>
                 </form>
         )
     } catch (e) {
-        if ((e instanceof HttpError))
-            return sendError(e)
+        if ((e instanceof HttpError)) return sendError(e)
         throw e
     }
 }
