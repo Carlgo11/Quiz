@@ -20,7 +20,8 @@ export default async function Home() {
     try {
         const questions = await getQuestions(`${token}`);
         return (
-                <form id="questions">
+                <div className="row justify-content-center">
+                <form id="questions" className="col col-md-11 col-lg-10">
                     {Object.keys(questions).map((key: string) => (
                             <div key={key} className="card my-4">
                                 <div className="card-header">
@@ -44,6 +45,7 @@ export default async function Home() {
                     <button className="btn btn-success btn-lg" type="submit">Submit</button>
                     <Script src="/questions.js"/>
                 </form>
+                </div>
         )
     } catch (e) {
         if ((e instanceof HttpError)) return sendError(e)
