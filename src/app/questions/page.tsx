@@ -3,6 +3,7 @@ import {redirect} from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../layout'
 import Script from 'next/script'
+import translations from '../i18n.json'
 
 export const runtime = 'edge'
 
@@ -13,6 +14,9 @@ class HttpError extends Error {
 }
 
 export default async function Home() {
+    const selectedLanguage = process.env.LANGUAGE || 'en'
+    // @ts-ignore
+    const tr = translations[selectedLanguage] || {};
     let token = cookies().get('token')?.value as string
     // Redirect to /register if token not set
     if (!token) redirect('/redirect');
@@ -25,7 +29,7 @@ export default async function Home() {
                     {Object.keys(questions).map((key: string) => (
                             <div key={key} className="card my-4">
                                 <div className="card-header">
-                                    Question {key}
+                                    {tr.question} {key}
                                 </div>
                                 <div className="card-body">
                                     {questions[key].map((option: string) => (
@@ -42,7 +46,7 @@ export default async function Home() {
                     ))
                     }
                     <p className="error text-danger-emphasis"></p>
-                    <button className="btn btn-success btn-lg" type="submit">Submit</button>
+                    <button className="btn btn-success btn-lg" type="submit">{tr.continue}</button>
                     <Script src="/questions.js"/>
                 </form>
                 </div>
@@ -69,7 +73,7 @@ function sendError(e: HttpError) {
 }
 
 async function getQuestions(token: string) {
-    const res = await fetch('https://quiz-7ff.pages.dev/api/questions', {
+    const res = await fetch(`${process.env.API}/questions`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

@@ -1,0 +1,14 @@
+{
+  "en": {
+    "question": "Question",
+    "enter_username": "Choose a Team Name",
+    "username": "Team Name",
+    "continue": "Continue"
+  },
+  "sv": {
+    "question": "Fråga",
+    "enter_username": "Välj ett lagnamn",
+    "username": "Lagnamn",
+    "continue": "Spara"
+  }
+}
