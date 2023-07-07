@@ -12,7 +12,7 @@ export default async function Home() {
 
     return (
             <div className={styles.outerForm}>
-                <form className="col col-md-8 col-lg-6" id="register" method="POST">
+                <form className="col col-md-8 col-lg-6" id="register" method="POST" action={`${process.env.API}/teams`}>
                     <h1 className={styles.header}>{tr.enter_username}</h1>
                     <hr/>
                     <div className="mb-3">
@@ -21,7 +21,7 @@ export default async function Home() {
                     <p className="error text-danger text-danger-emphasis mb-3">
                     </p>
                     <button className="btn btn-lg btn-success" type="submit">{tr.continue}</button>
-                    <Script src="/register.js" async/>
+                    <Script src="/register.js" defer/>
                 </form>
             </div>
     );

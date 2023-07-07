@@ -43,7 +43,7 @@ form.addEventListener('submit', async function (e) {
     const data = new FormData(form);
     const token = getTokenFromCookie();
     console.log(token);
-    const res = await fetch('https://quiz-7ff.pages.dev/api/answers', {
+    const res = await fetch(e.target.action, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,

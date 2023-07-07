@@ -25,7 +25,7 @@ export default async function Home() {
         const questions = await getQuestions(`${token}`);
         return (
                 <div className="row justify-content-center">
-                <form id="questions" className="col col-md-11 col-lg-10">
+                <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.API}/answers`}>
                     {Object.keys(questions).map((key: string) => (
                             <div key={key} className="card my-4">
                                 <div className="card-header">
@@ -47,7 +47,7 @@ export default async function Home() {
                     }
                     <p className="error text-danger-emphasis"></p>
                     <button className="btn btn-success btn-lg" type="submit">{tr.continue}</button>
-                    <Script src="/questions.js"/>
+                    <Script src="/questions.js" defer/>
                 </form>
                 </div>
         )

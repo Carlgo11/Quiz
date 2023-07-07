@@ -3,7 +3,7 @@ form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const data = new FormData(form);
-    const res = await fetch('https://quiz-7ff.pages.dev/api/teams', {
+    const res = await fetch(e.target.action, {
         method: 'PUT', headers: {
             'Content-Type': 'application/json', 'Accept': 'application/json',
         }, body: JSON.stringify({
