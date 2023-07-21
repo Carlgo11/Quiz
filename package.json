@@ -6,7 +6,6 @@
   "main": "next.config.js",
   "scripts": {
     "dev": "next dev",
-    "build": "npx @cloudflare/next-on-pages@1",
     "start": "next start",
     "lint": "next lint"
   },
