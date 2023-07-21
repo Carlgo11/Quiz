@@ -1,8 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React, {Suspense} from "react";
+import React from "react";
 import Question from "@/app/admin/[id]/EditQuestion";
 
+
 export default async function EditQuestion({params}: { params: { id: string } }) {
+
     const data = await fetch(`${process.env.API}/questions`, {
         headers: {
             // TODO: Implement admin JWT
@@ -11,13 +13,10 @@ export default async function EditQuestion({params}: { params: { id: string } })
         },
         cache: "no-cache"
     });
-    const json = await data.json()
+    const json = (await data.json())[params.id] || []
+    console.log(json.length > 0 ? json.length : 1)
     return (
-            <section>
-            <Suspense fallback={<p>Loading feed...</p>}>
-            <Question params={params} data={json[params.id]} options_length={json[params.id].length} />
-            </Suspense>
-            </section>
+            <Question params={params} data={json}/>
     )
 
 }
