@@ -1,9 +1,9 @@
+import Script from 'next/script'
 import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
+import '@/app/layout'
+import translations from '@/i18n.json'
 import 'bootstrap/dist/css/bootstrap.css'
-import '../layout'
-import Script from 'next/script'
-import translations from '../i18n.json'
 
 export const runtime = 'edge'
 
@@ -14,9 +14,8 @@ class HttpError extends Error {
 }
 
 export default async function Home() {
-    const selectedLanguage = process.env.LANGUAGE || 'en'
     // @ts-ignore
-    const tr = translations[selectedLanguage] || {};
+    const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
     let token = cookies().get('token')?.value as string
     // Redirect to /register if token not set
     if (!token) redirect('/redirect');
@@ -25,30 +24,30 @@ export default async function Home() {
         const questions = await getQuestions(`${token}`);
         return (
                 <div className="row justify-content-center">
-                <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.API}/answers`}>
-                    {Object.keys(questions).map((key: string) => (
-                            <div key={key} className="card my-4">
-                                <div className="card-header">
-                                    {tr.question} {key}
+                    <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.API}/answers`}>
+                        {Object.keys(questions).map((key: string) => (
+                                <div key={key} className="card my-4">
+                                    <div className="card-header">
+                                        {tr.question} {key}
+                                    </div>
+                                    <div className="card-body">
+                                        {questions[key].map((option: string) => (
+                                                <div key={option} className="form-check">
+                                                    <input type="radio" id={key + option} name={key}
+                                                           className="form-check-input"
+                                                           value={option}/>
+                                                    <label className="form-check-label"
+                                                           htmlFor={key + option}>{option}</label>
+                                                </div>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="card-body">
-                                    {questions[key].map((option: string) => (
-                                            <div key={option} className="form-check">
-                                                <input type="radio" id={key + option} name={key}
-                                                       className="form-check-input"
-                                                       value={option}/>
-                                                <label className="form-check-label"
-                                                       htmlFor={key + option}>{option}</label>
-                                            </div>
-                                    ))}
-                                </div>
-                            </div>
-                    ))
-                    }
-                    <p className="error text-danger-emphasis"></p>
-                    <button className="btn btn-success btn-lg" type="submit">{tr.continue}</button>
-                    <Script src="/questions.js" defer/>
-                </form>
+                        ))
+                        }
+                        <p className="error text-danger-emphasis"></p>
+                        <button className="btn btn-success btn-lg" type="submit">{tr.save}</button>
+                        <Script src="/questions.js" defer/>
+                    </form>
                 </div>
         )
     } catch (e) {

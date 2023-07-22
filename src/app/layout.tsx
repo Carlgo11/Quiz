@@ -1,5 +1,5 @@
 import Script from "next/script";
-import './global.css'
+import '@/styles/global.css'
 export const runtime = 'edge'
 
 export default function RootLayout({children,}: {
@@ -7,7 +7,9 @@ export default function RootLayout({children,}: {
 }) {
     return (
         <html lang="en" >
-        <Script src="color-mode.js"></Script>
+        <head>
+            <Script src="color-mode.js"></Script>
+        </head>
         <body suppressHydrationWarning={true} className="container 100vh">{children}</body>
         </html>
     )

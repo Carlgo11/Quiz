@@ -1,0 +1,22 @@
+{
+  "en": {
+    "question": "Question",
+    "enter_name": "Choose a Team Name",
+    "team_name": "Team Name",
+    "continue": "Continue",
+    "save": "Save",
+    "login": "Log in",
+    "username": "Username",
+    "password": "Password"
+  },
+  "sv": {
+    "question": "Fråga",
+    "enter_name": "Välj ett lagnamn",
+    "team_name": "Lagnamn",
+    "continue": "Nästa",
+    "save": "Spara",
+    "login": "Logga in",
+    "username": "Användarnamn",
+    "password": "Lösenord"
+  }
+}

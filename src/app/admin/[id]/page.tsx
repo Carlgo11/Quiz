@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import React from "react";
 import Question from "@/app/admin/[id]/EditQuestion";
 
-
 export default async function EditQuestion({params}: { params: { id: string } }) {
 
     const data = await fetch(`${process.env.API}/questions`, {
@@ -14,9 +13,5 @@ export default async function EditQuestion({params}: { params: { id: string } })
         cache: "no-cache"
     });
     const json = (await data.json())[params.id] || []
-    console.log(json.length > 0 ? json.length : 1)
-    return (
-            <Question params={params} data={json}/>
-    )
-
+    return <Question params={params} data={json}/>
 }

@@ -1,6 +1,6 @@
 "use client";
 import 'bootstrap/dist/css/bootstrap.css'
-import styles from './page.module.css'
+import styles from '@/styles/editQuestion.module.css'
 import React, {FormEvent, useState} from "react"
 import {useRouter} from 'next/navigation'
 
