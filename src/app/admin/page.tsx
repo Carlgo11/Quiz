@@ -5,11 +5,10 @@ import LoginPage from "./Login";
 import QuestionsList from "./Questions";
 
 export default async function AdminPage() {
-    let token = cookies().get('token')?.value as string
+    let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
 
     // Redirect to /register if token not set
     if (!token) return <LoginPage/>;
 
-    token = JSON.parse(token).token
-    return <QuestionsList token={token}/>
+    return <QuestionsList/>
 }

@@ -4,9 +4,10 @@ import styles from '@/styles/editQuestion.module.css'
 import React, {FormEvent, useState} from "react"
 import {useRouter} from 'next/navigation'
 
-export default function EditQuestion({params, data}: {
+export default function EditQuestion({params, data, token}: {
     params: { id: string },
-    data: Array<string>
+    data: Array<string>,
+    token: string
 }) {
 
     const HandleSubmit = async (event: FormEvent, id: string, uri: string | undefined) => {
@@ -23,7 +24,7 @@ export default function EditQuestion({params, data}: {
                 if (value !== null) options.push(value.toString());
             }
         }
-        // console.log(JSON.stringify(options))
+
         const data = {
             [id]: {
                 options: options,
@@ -36,7 +37,7 @@ export default function EditQuestion({params, data}: {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidGVzdDEiLCJuYmYiOjE2ODk0NjI1NDEsImV4cCI6MTY4OTQ2OTc0MSwiaWF0IjoxNjg5NDYyNTQxfQ.pTKVCGfnb1drpGxGljoZsTQnxry9MoaR-KpjDcnN-pA`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data),
             cache: "no-cache"
@@ -44,7 +45,6 @@ export default function EditQuestion({params, data}: {
         if (!res.ok) throw res.status
         return res.ok
     }
-
 
     const handleIncreaseOptions = (event: Event) => {
         event.preventDefault();

@@ -18,6 +18,7 @@ async function sendForm(event: FormEvent, url: string) {
             'password': formData.get('password')
         }), cache: 'no-store'
     })
+
     if (!res.ok) {
         const {error} = await res.json();
         console.error(`${res.status} ${res.statusText}: ${error}`)
@@ -25,6 +26,7 @@ async function sendForm(event: FormEvent, url: string) {
         document.querySelector('.error').textContent = error
         return null;
     }
+
     const {token} = await res.json();
     // Set the session cookie
     const cookieValue = JSON.stringify({token});
