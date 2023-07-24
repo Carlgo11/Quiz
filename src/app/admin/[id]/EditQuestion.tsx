@@ -28,7 +28,7 @@ export default function EditQuestion({params, data, token}: {
         const data = {
             [id]: {
                 options: options,
-                correct: formData.get('correct')
+                correct: formData.get(formData.get('correct')?.toString() as string) //Use value of correct input elem
             }
         }
         event.preventDefault()
