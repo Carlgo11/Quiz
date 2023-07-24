@@ -1,5 +1,4 @@
 import Link from "next/link";
-import {cookies} from "next/headers";
 
 async function fetchQuestions(token: string) {
     const data = await fetch(`${process.env.API}/questions`, {
@@ -12,8 +11,7 @@ async function fetchQuestions(token: string) {
     return await data.json()
 }
 
-export default async function QuestionsList() {
-    let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+export default async function QuestionsList({token}:{token:string}) {
     const questions = await fetchQuestions(token);
     return (
             <div className="row">

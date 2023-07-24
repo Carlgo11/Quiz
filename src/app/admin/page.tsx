@@ -10,5 +10,5 @@ export default async function AdminPage() {
     // Redirect to /register if token not set
     if (!token) return <LoginPage/>;
 
-    return <QuestionsList/>
+    return <QuestionsList token={token}/>
 }
