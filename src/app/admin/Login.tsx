@@ -4,7 +4,7 @@ import {useRouter} from 'next/navigation'
 import translations from '@/i18n.json'
 import {FormEvent} from "react";
 
-async function sendForm(event: FormEvent, url: string) {
+async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
     const form: any | null = event.target
     if (form === null) return null;
     event.preventDefault()
@@ -17,13 +17,18 @@ async function sendForm(event: FormEvent, url: string) {
     let data
     try {
         const res = await fetch(`${url}/admin`, {
-            method: 'POST', headers: {
+            method: method, headers: {
                 'Accept': 'application/json',
                 'Authorization': `Basic ${Buffer.from(auth).toString('base64')}`
             }, cache: 'no-store'
         })
 
         if (!res.ok) {
+            // Try and validate user instead of creating user if status eql conflict
+            if (res.status === 409)
+                return sendForm(event, url, 'POST')
+
+            // Unless error is due to a user conflict, output error to DOM & console
             const {error} = await res.json();
             errorElem.textContent = error
             return false;
