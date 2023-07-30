@@ -5,10 +5,10 @@ import LoginPage from "@/components/Login";
 import QuestionsList from "@/components/Questions";
 
 export default async function AdminPage() {
-    let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
 
-    // Redirect to /register if token not set
-    if (!token) return <LoginPage/>;
+  // Redirect to /register if token not set
+  if (!token) return <LoginPage/>;
 
-    return <QuestionsList token={token}/>
+  return <QuestionsList token={token}/>
 }
