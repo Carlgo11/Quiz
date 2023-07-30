@@ -8,18 +8,14 @@ export default function DeleteButton({question, token}: { question: string, toke
         const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API}/questions/${question}`, {
             method: 'DELETE',
             headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
                 'Authorization': `Bearer ${token}`
             },
             cache: "no-cache"
         })
-        if (!res.ok) throw res.status
-
-        router.refresh()
+        if (!res.ok) console.error((await res.json())['error'])
         return res.ok
     }
 
-    return <i className="bi bi-trash-fill"
-              style={{position: "absolute", top: "1em", right: "1em"}} onClick={async () => deleteQuestion()}></i>
+    return <i className="bi bi-trash-fill q-delete-btn"
+              style={{position: "absolute", top: "1em", right: "1em"}} onClick={async () => await deleteQuestion() ? router.refresh() : null}></i>
 }

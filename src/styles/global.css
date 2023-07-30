@@ -2,3 +2,10 @@ a {
     text-decoration: none !important;
     color: inherit !important;
 }
+.q-delete-btn {
+    opacity: 0.5;
+}
+
+.q-delete-btn:hover {
+    opacity: 0.9;
+}
