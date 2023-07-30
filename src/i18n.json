@@ -1,7 +1,10 @@
 {
   "en": {
     "question": "Question",
+    "questions": "Questions",
     "enter_name": "Choose a Team Name",
+    "teams": "Teams",
+    "team": "Team",
     "team_name": "Team Name",
     "continue": "Continue",
     "save": "Save",
@@ -9,18 +12,23 @@
     "username": "Username",
     "password": "Password",
     "options": "options",
-    "add_new": "Add new"
+    "add_new": "Add new",
+    "logout": "Log out"
   },
   "sv": {
     "question": "Fråga",
+    "questions": "Frågor",
     "enter_name": "Välj ett lagnamn",
     "team_name": "Lagnamn",
+    "teams": "Lag",
+    "team": "Lag",
     "continue": "Nästa",
     "save": "Spara",
     "options": "alternativ",
     "login": "Logga in",
     "username": "Användarnamn",
     "password": "Lösenord",
-    "add_new": "Lägg till"
+    "add_new": "Lägg till",
+    "logout": "Logga ut"
   }
 }

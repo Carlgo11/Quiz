@@ -32,7 +32,7 @@ export default async function QuestionsList({token}: { token: string }) {
         {Object.keys(questions).map((id: string) => (
             <div key={id}
                  className="col-12 mt-1 p-3 border border-secondary-subtle bg-body-secondary position-relative row">
-              <Link href={`/admin/${id}`} className="col-11">
+              <Link href={`/admin/questions/${id}`} className="col-11">
                 <div>
                   <h2>{tr.question} {id}</h2>
                   <p className="text-body-secondary">{questions[id].length} {tr.options}</p>
@@ -43,7 +43,7 @@ export default async function QuestionsList({token}: { token: string }) {
               </div>
             </div>
         ))}
-        <Link href={`/admin/${Object.keys(questions).length + 1}`}>
+        <Link href={`/admin/questions/${Object.keys(questions).length + 1}`}>
           <button className="btn btn-primary mt-2" type="button">{tr.add_new}</button>
         </Link>
       </div>

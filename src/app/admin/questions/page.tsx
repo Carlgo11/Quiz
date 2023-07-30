@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import {cookies} from "next/headers";
 import LoginPage from "@/components/Login";
 import QuestionsList from "@/components/Questions";
+import '../layout'
 
 export default async function AdminPage() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)

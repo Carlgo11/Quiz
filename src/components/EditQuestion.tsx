@@ -66,7 +66,7 @@ export default function EditQuestion({params, data, token}: {
       <form key="a" id="question" onSubmit={
         async (e) => {
           if (await HandleSubmit(e, params.id, process.env.NEXT_PUBLIC_API))
-            router.push("/admin/")
+            router.push("/admin/questions")
         }
       }>
         <div className="card">

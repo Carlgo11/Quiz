@@ -2,9 +2,11 @@
 import styles from "@/styles/auth.module.css";
 import {useRouter} from 'next/navigation'
 import translations from '@/i18n.json'
-import {FormEvent} from "react";
+import {FormEvent, useEffect} from "react";
+import {AppRouterInstance} from "next/dist/shared/lib/app-router-context";
 
 async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
+
   const form: any | null = event.target
   if (form === null) return null;
   event.preventDefault()
@@ -59,17 +61,19 @@ async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
 }
 
 export default function LoginPage() {
+
   const selectedLanguage = process.env.NEXT_PUBLIC_LANGUAGE || 'en'
   // @ts-ignore
   const tr = translations[selectedLanguage] || {};
   const router = useRouter();
+
   return (
       <div className={styles.outerForm}>
         <form className="col col-md-8 col-lg-6" onSubmit={
           async (e) => {
             // @ts-ignore
             if (await sendForm(e, process.env.NEXT_PUBLIC_API))
-              router.refresh()
+              router.replace('/admin/questions/')
           }
         }>
           <h1 className={styles.header}>{tr.login}</h1>
