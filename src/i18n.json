@@ -7,7 +7,9 @@
     "save": "Save",
     "login": "Log in",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "options": "options",
+    "add_new": "Add new"
   },
   "sv": {
     "question": "Fråga",
@@ -15,8 +17,10 @@
     "team_name": "Lagnamn",
     "continue": "Nästa",
     "save": "Spara",
+    "options": "alternativ",
     "login": "Logga in",
     "username": "Användarnamn",
-    "password": "Lösenord"
+    "password": "Lösenord",
+    "add_new": "Lägg till"
   }
 }

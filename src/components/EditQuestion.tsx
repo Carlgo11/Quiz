@@ -3,14 +3,17 @@ import 'bootstrap/dist/css/bootstrap.css'
 import styles from '@/styles/editQuestion.module.css'
 import React, {FormEvent, useState} from "react"
 import {useRouter} from 'next/navigation'
+import translations from "@/i18n.json";
 
 export default function EditQuestion({params, data, token}: {
     params: { id: string },
     data: Array<string>,
     token: string
 }) {
-
+// @ts-ignore
+    const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
     const HandleSubmit = async (event: FormEvent, id: string, uri: string | undefined) => {
+
         const form: HTMLFormElement | null = document.querySelector('#question')
         if (form === null) return null;
 
@@ -68,7 +71,7 @@ export default function EditQuestion({params, data, token}: {
             }>
                 <div className="card">
                     <div className="card-header">
-                        Question {params.id}
+                        {tr.question} {params.id}
                     </div>
                     <div className="card-body">
                         {Array.from({length: length}).map((_, index) => (
@@ -86,7 +89,7 @@ export default function EditQuestion({params, data, token}: {
                         </button>
                         <button className={styles.plusMinusBtn} onClick={(e: any) => handleDecreaseOptions(e)}>-
                         </button>
-                        <button type="submit">Submit</button>
+                        <button type="submit">{tr.save}</button>
                     </div>
                 </div>
             </form>

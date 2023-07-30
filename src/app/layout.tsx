@@ -10,7 +10,7 @@ export default function RootLayout({children,}: {
         <head>
             <Script src="color-mode.js"></Script>
         </head>
-        <body suppressHydrationWarning={true} className="container 100vh">{children}</body>
+        <body suppressHydrationWarning={true}><div className="container 100vh">{children}</div></body>
         </html>
     )
 }

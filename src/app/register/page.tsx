@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import '../layout'
+import '@/app/layout'
 import Script from 'next/script'
 import styles from '@/styles/auth.module.css'
 import translations from '@/i18n.json'

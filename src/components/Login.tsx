@@ -52,6 +52,8 @@ async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
     // Set the session cookie
     const cookieValue = JSON.stringify({token});
     document.cookie = `token=${encodeURIComponent(cookieValue)}; path=/`;
+    // @ts-ignore
+    document.cookie = `user=${encodeURIComponent(formData.get('username'))}; path=/`
     console.log(token)
     return true;
 }
@@ -76,7 +78,7 @@ export default function LoginPage() {
                     <input name="password" type="password" className="form-control mb-3" placeholder={tr.password} required minLength={1} maxLength={100}/>
                     <p className="error text-danger text-danger-emphasis mb-3">
                     </p>
-                    <button className="btn btn-lg btn-success" type="submit">{tr.continue}</button>
+                    <button className="btn btn-lg btn-outline-danger" type="submit">{tr.continue}</button>
                 </form>
             </div>
     )
