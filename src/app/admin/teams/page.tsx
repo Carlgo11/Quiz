@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import translations from "@/i18n.json";
 import {cookies} from "next/headers";
 import styles from '@/styles/teams.module.css'
@@ -30,6 +29,7 @@ function Question({question, answer}: {question: {correct:boolean, name: number}
 export default async function TeamsPage() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
   const teams = await getTeams(process.env.API || '', token)
+  console.log(JSON.stringify(teams))
   // @ts-ignore
   const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   return(
@@ -37,12 +37,12 @@ export default async function TeamsPage() {
         <h1>{tr.teams}</h1>
         {Object.keys(teams).map((team: string) => (
             <div key={team} className="card mt-4">
-              <div className="card-header">{team}</div>
+              <div className={"card-header " + styles.team}>{team}</div>
           <div className={"card-body row row-cols-6 " + styles.questions}>
                 {Object.keys(teams[team]).map((q) =>
                     parseInt(q) ? <Question key={q} answer={teams[team][q].answer} question={{correct: teams[team][q].correct as boolean, name: parseInt(q)}}/> : null )}
           </div>
-              <div className="card-footer font-monospace text-body-secondary">{teams[team].total}</div>
+              <div className="card-footer font-monospace text-body-secondary">{tr.total}: {teams[team].total}</div>
         </div>
         ))
         }

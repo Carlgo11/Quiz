@@ -1,6 +1,7 @@
 import Script from "next/script";
 import '@/styles/global.css'
 import {NavBar} from "@/components/NavBar";
+import 'bootstrap/dist/css/bootstrap.css'
 export const runtime = 'edge'
 
 export default function AdminLayout({children,}: {
@@ -9,7 +10,7 @@ export default function AdminLayout({children,}: {
   return (
       <html lang="en">
       <head>
-        <Script src="color-mode.js"></Script>
+        <Script src="/color-mode.js"></Script>
         <title>Admin Portal</title>
       </head>
       <body suppressHydrationWarning={true}>

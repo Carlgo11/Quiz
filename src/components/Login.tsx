@@ -1,9 +1,8 @@
 "use client"
 import styles from "@/styles/auth.module.css";
-import {useRouter} from 'next/navigation'
-import translations from '@/i18n.json'
-import {FormEvent, useEffect} from "react";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context";
+import {FormEvent} from "react";
+import translations from "@/i18n.json";
+import {Translation} from "@/types/translations";
 
 async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
 
@@ -61,11 +60,7 @@ async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
 }
 
 export default function LoginPage() {
-
-  const selectedLanguage = process.env.NEXT_PUBLIC_LANGUAGE || 'en'
-  // @ts-ignore
-  const tr = translations[selectedLanguage] || {};
-  const router = useRouter();
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
       <div className={styles.outerForm}>
@@ -73,7 +68,7 @@ export default function LoginPage() {
           async (e) => {
             // @ts-ignore
             if (await sendForm(e, process.env.NEXT_PUBLIC_API))
-              router.replace('/admin/questions/')
+              window.location.replace('/admin/questions/')
           }
         }>
           <h1 className={styles.header}>{tr.login}</h1>

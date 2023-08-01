@@ -13,7 +13,8 @@
     "password": "Password",
     "options": "options",
     "add_new": "Add new",
-    "logout": "Log out"
+    "logout": "Log out",
+    "total": "Total"
   },
   "sv": {
     "question": "Fråga",
@@ -29,6 +30,7 @@
     "username": "Användarnamn",
     "password": "Lösenord",
     "add_new": "Lägg till",
-    "logout": "Logga ut"
+    "logout": "Logga ut",
+    "total": "Totalt"
   }
 }

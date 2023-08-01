@@ -21,3 +21,6 @@ padding: 1rem 0;
 .answer {
   font-size: 1.4em;
 }
+.team {
+  text-transform: capitalize;
+}

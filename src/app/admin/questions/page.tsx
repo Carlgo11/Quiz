@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import {cookies} from "next/headers";
 import LoginPage from "@/components/Login";
 import QuestionsList from "@/components/Questions";
