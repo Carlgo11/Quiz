@@ -1,0 +1,23 @@
+.hr {
+  margin: 0.4rem 0;
+}
+
+.question {
+padding: 1rem 0;
+  text-align: center;
+  background: var(--bs-light-bg-subtle);
+}
+
+.question:nth-of-type(even) {
+  background: var(--bs-secondary-bg-subtle);
+  color: var(--bs-secondary-color);
+}
+
+
+.q_name {
+  margin-bottom: 0;
+}
+
+.answer {
+  font-size: 1.4em;
+}

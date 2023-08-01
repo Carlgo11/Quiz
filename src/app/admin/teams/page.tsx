@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import translations from "@/i18n.json";
 import {cookies} from "next/headers";
+import styles from '@/styles/teams.module.css'
 
 async function getTeams(uri: string, token: string) {
   const res: Response = await fetch(`${uri}/teams`, {
@@ -15,6 +16,17 @@ async function getTeams(uri: string, token: string) {
   return res.json()
 }
 
+function Question({question, answer}: {question: {correct:boolean, name: number}, answer:string} ){
+  return(
+      <div className={"col " + styles.question}>
+        <h3 className={styles.q_name}>{question.name}</h3>
+        <hr className={styles.hr} />
+        {answer ? <b key={question.name} className={styles.answer + (question.correct ? ' text-success' : ' text-danger')}>{answer}</b>:<b className={styles.answer}>—</b> }
+
+      </div>
+  )
+}
+
 export default async function TeamsPage() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
   const teams = await getTeams(process.env.API || '', token)
@@ -26,27 +38,9 @@ export default async function TeamsPage() {
         {Object.keys(teams).map((team: string) => (
             <div key={team} className="card mt-4">
               <div className="card-header">{team}</div>
-          <div className="card-body row">
-            <table className="table table-striped-columns text-center">
-              <thead>
-              <tr>
-                {Object.keys(teams[team]).map((question) =>
-                    parseInt(question) ? <th key={question} scope="col">{tr.question} {question}</th> : null
-                )}
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
+          <div className={"card-body row row-cols-6 " + styles.questions}>
                 {Object.keys(teams[team]).map((q) =>
-                    parseInt(q) ?
-                        teams[team][q].answer ?
-                            <th key={q} className={teams[team][q].correct ? 'text-success' : 'text-danger'}>
-                              {teams[team][q].answer}
-                            </th> : <th>-</th> : null
-                )}
-              </tr>
-              </tbody>
-            </table>
+                    parseInt(q) ? <Question key={q} answer={teams[team][q].answer} question={{correct: teams[team][q].correct as boolean, name: parseInt(q)}}/> : null )}
           </div>
               <div className="card-footer font-monospace text-body-secondary">{teams[team].total}</div>
         </div>
