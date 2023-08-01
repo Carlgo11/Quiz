@@ -1,7 +1,6 @@
 import Script from 'next/script'
 import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
-import '@/app/layout'
 import translations from '@/i18n.json'
 import 'bootstrap/dist/css/bootstrap.css'
 
