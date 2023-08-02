@@ -3,7 +3,7 @@ import '@/styles/global.css'
 import {NavBar} from "@/components/NavBar";
 import 'bootstrap/dist/css/bootstrap.css'
 
-export const runtime: string = 'edge'
+export const runtime = 'edge'
 
 export default function AdminLayout({children,}: {
   children: React.ReactNode
