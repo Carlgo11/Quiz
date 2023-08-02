@@ -9,7 +9,8 @@ const fetchQuestions = async (token: string) => {
     headers: {
       "authorization": `Bearer ${token.toString()}`,
       "accept": "application/json",
-    }
+    },
+    cache: "no-cache"
   });
   if (!data.ok) {
     if (data.status === 401)

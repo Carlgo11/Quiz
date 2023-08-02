@@ -10,7 +10,8 @@ async function getTeams(token: string) {
     headers: {
       "Accept": "application/json",
       'Authorization': `Bearer ${token}`
-    }
+    },
+    cache: "no-cache"
   })
   if (!res.ok) throw res.status
   return res.json()

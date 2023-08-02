@@ -12,7 +12,8 @@ export default async function EditQuestion({params}: { params: { id: string } })
     headers: {
       "authorization": `Bearer ${token}`,
       "accept": "application/json",
-    }
+    },
+    cache: "no-cache"
   });
   const json = (await data.json())[params.id] || []
   return <Question params={params} data={json} token={token}/>
