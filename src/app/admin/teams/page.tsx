@@ -1,15 +1,15 @@
 import translations from "@/i18n.json";
 import {cookies} from "next/headers";
 import styles from '@/styles/teams.module.css'
+import {Translation} from "@/types/translations";
 
-async function getTeams(uri: string, token: string) {
-  const res: Response = await fetch(`${uri}/teams`, {
+async function getTeams(token: string) {
+  const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API}/teams`, {
     method: 'GET',
     headers: {
       "Accept": "application/json",
       'Authorization': `Bearer ${token}`
-    },
-    cache: "no-cache"
+    }
   })
   if (!res.ok) throw res.status
   return res.json()
@@ -28,10 +28,8 @@ function Question({question, answer}: {question: {correct:boolean, name: number}
 
 export default async function TeamsPage() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
-  const teams = await getTeams(process.env.API || '', token)
-  console.log(JSON.stringify(teams))
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const teams = await getTeams(token)
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   return(
       <div>
         <h1>{tr.teams}</h1>

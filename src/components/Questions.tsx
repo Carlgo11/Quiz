@@ -2,29 +2,29 @@ import Link from "next/link";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import DeleteButton from "./DeleteQuestion";
 import translations from '@/i18n.json'
+import {Translation} from "@/types/translations";
 
 const fetchQuestions = async (token: string) => {
-  const data = await fetch(`${process.env.API}/questions`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
     headers: {
       "authorization": `Bearer ${token.toString()}`,
       "accept": "application/json",
-    },
-    cache: "no-cache"
+    }
   });
   if (!data.ok) {
     if (data.status === 401)
       window.location.href = '/admin/logout'
     if (data.status === 403)
       window.location.reload()
-    console.error(data.json())
+    console.log(`domain: ${data.url}`)
+    console.error(await data.text())
     return false;
   }
   return await data.json()
 }
 
 export default async function QuestionsList({token}: { token: string }) {
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   const questions = await fetchQuestions(token);
   if (!questions) return "";
   return (

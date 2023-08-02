@@ -23,7 +23,7 @@ export default async function Home() {
     const questions = await getQuestions(`${token}`);
     return (
         <div className="row justify-content-center">
-          <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.API}/answers`}>
+          <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.NEXT_PUBLIC_API}/answers`}>
             {Object.keys(questions).map((key: string) => (
                 <div key={key} className="card my-4">
                   <div className="card-header">
@@ -71,12 +71,12 @@ function sendError(e: HttpError) {
 }
 
 async function getQuestions(token: string) {
-  const res = await fetch(`${process.env.API}/questions`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
-    },
+    }
   })
 
   if (!res.ok) throw new HttpError(res.status, res.statusText);
