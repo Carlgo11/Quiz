@@ -1,10 +1,10 @@
 import {DropDown} from "@/components/ProfileBtn";
 import {cookies} from "next/headers";
 import translations from "@/i18n.json";
+import {Translation} from "@/types/translations";
 
 export const NavBar = () => {
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary mb-3">

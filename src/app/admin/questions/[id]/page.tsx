@@ -6,7 +6,7 @@ import {redirect} from "next/navigation";
 
 export default async function EditQuestion({params}: { params: { id: string } }) {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
-  if (!token) redirect('/admin/');
+  if (!token) redirect('/admin/login');
 
   const data = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
     headers: {

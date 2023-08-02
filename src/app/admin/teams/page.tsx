@@ -2,6 +2,7 @@ import translations from "@/i18n.json";
 import {cookies} from "next/headers";
 import styles from '@/styles/teams.module.css'
 import {Translation} from "@/types/translations";
+import {redirect} from "next/navigation";
 
 async function getTeams(token: string) {
   const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API}/teams`, {
@@ -28,6 +29,7 @@ function Question({question, answer}: {question: {correct:boolean, name: number}
 
 export default async function TeamsPage() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  if (!token) redirect('/admin/login');
   const teams = await getTeams(token)
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   return(

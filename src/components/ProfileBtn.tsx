@@ -1,12 +1,10 @@
 "use client"
 import React, {useEffect} from "react";
-import { useRouter } from 'next/navigation'
 import translations from "@/i18n.json";
+import {Translation} from "@/types/translations";
 
 export const DropDown = ({user}: {user: string}) => {
-  const router = useRouter()
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   useEffect(() => {
     typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null
   }, [])

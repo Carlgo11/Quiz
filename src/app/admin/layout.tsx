@@ -2,7 +2,8 @@ import Script from "next/script";
 import '@/styles/global.css'
 import {NavBar} from "@/components/NavBar";
 import 'bootstrap/dist/css/bootstrap.css'
-export const runtime = 'edge'
+
+export const runtime: string = 'edge'
 
 export default function AdminLayout({children,}: {
   children: React.ReactNode

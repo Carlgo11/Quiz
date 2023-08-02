@@ -4,14 +4,14 @@ import styles from '@/styles/editQuestion.module.css'
 import React, {FormEvent, useState} from "react"
 import {useRouter} from 'next/navigation'
 import translations from "@/i18n.json";
+import {Translation} from "@/types/translations";
 
 export default function EditQuestion({params, data, token}: {
   params: { id: string },
   data: Array<string>,
   token: string
 }) {
-// @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   const HandleSubmit = async (event: FormEvent, id: string, uri: string | undefined) => {
 
     const form: HTMLFormElement | null = document.querySelector('#question')

@@ -3,6 +3,7 @@ import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
 import translations from '@/i18n.json'
 import 'bootstrap/dist/css/bootstrap.css'
+import {Translation} from "@/types/translations";
 
 export const runtime = 'edge'
 
@@ -13,8 +14,7 @@ class HttpError extends Error {
 }
 
 export default async function Home() {
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   let token = cookies().get('token')?.value as string
   // Redirect to /register if token not set
   if (!token) redirect('/redirect');

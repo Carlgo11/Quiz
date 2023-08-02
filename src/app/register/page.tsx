@@ -2,12 +2,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import Script from 'next/script'
 import styles from '@/styles/auth.module.css'
 import translations from '@/i18n.json'
+import {Translation} from "@/types/translations";
 
 export const runtime = 'edge'
 
 export default async function Home() {
-  // @ts-ignore
-  const tr = translations[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
       <div className={styles.outerForm}>
