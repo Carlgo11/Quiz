@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import Script from 'next/script'
 import styles from '@/styles/auth.module.css'
 import translations from '@/i18n.json'
@@ -6,7 +5,7 @@ import {Translation} from "@/types/translations";
 
 export const runtime = 'edge'
 
-export default async function Home() {
+export default async function Page() {
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (

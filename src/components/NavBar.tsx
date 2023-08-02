@@ -9,7 +9,7 @@ export const NavBar = () => {
   return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div className="container">
-          <a className="navbar-brand" href="#">Quiz Admin Portal</a>
+          <a className="navbar-brand" href="#">Quiz Admin Panel</a>
           {cookies().get('token')?.value ? (
               <>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">

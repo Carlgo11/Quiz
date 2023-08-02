@@ -2,7 +2,6 @@ import Script from 'next/script'
 import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
 import translations from '@/i18n.json'
-import 'bootstrap/dist/css/bootstrap.css'
 import {Translation} from "@/types/translations";
 
 export const runtime = 'edge'
@@ -13,7 +12,7 @@ class HttpError extends Error {
   }
 }
 
-export default async function Home() {
+export default async function Page() {
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   let token = cookies().get('token')?.value as string
   // Redirect to /register if token not set
@@ -50,6 +49,7 @@ export default async function Home() {
         </div>
     )
   } catch (e) {
+    // send Error to sendError() if the Error is network-related
     if ((e instanceof HttpError)) return sendError(e)
     throw e
   }
@@ -76,7 +76,8 @@ async function getQuestions(token: string) {
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
-    }
+    },
+    cache: "reload"
   })
 
   if (!res.ok) throw new HttpError(res.status, res.statusText);
