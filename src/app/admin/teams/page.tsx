@@ -29,7 +29,7 @@ function Question({question, answer}: {question: {correct:boolean, name: number}
 }
 
 export default async function TeamsPage() {
-  let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  let {token} = JSON.parse(cookies().get('admin-token')?.value || "{}" as string)
   if (!token) redirect('/admin/login');
   const teams = await getTeams(token)
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};

@@ -5,7 +5,7 @@ import '../layout'
 export const runtime = 'edge';
 
 export default async function AdminPage() {
-  let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  let {token} = JSON.parse(cookies().get('admin-token')?.value || "{}" as string)
 
   // Redirect to /register if token not set
   if (!token) return <LoginPage/>;

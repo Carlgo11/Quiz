@@ -52,10 +52,7 @@ async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
   const {token} = data
   // Set the session cookie
   const cookieValue = JSON.stringify({token});
-  document.cookie = `token=${encodeURIComponent(cookieValue)}; path=/`;
-  // @ts-ignore
-  document.cookie = `user=${encodeURIComponent(formData.get('username'))}; path=/`
-  console.log(token)
+  document.cookie = `admin-token=${encodeURIComponent(cookieValue)}; path=/`;
   return true;
 }
 

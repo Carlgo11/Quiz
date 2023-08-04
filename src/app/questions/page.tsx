@@ -16,7 +16,7 @@ export default async function Page() {
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   let token = cookies().get('token')?.value as string
   // Redirect to /register if token not set
-  if (!token) redirect('/redirect');
+  if (!token) redirect('/register');
   token = JSON.parse(token).token
   try {
     const questions = await getQuestions(`${token}`);
