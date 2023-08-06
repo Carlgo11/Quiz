@@ -2,11 +2,23 @@
 import style from "@/styles/questions.module.css";
 import {Translation} from "@/types/translations";
 import translations from "@/i18n.json";
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 
 export default function QuestionCard({questions, token}: { questions: any, token: string }) {
+
+  const [answers, setAnswers] = useState({})
   const [sent, setSent] = useState(false);
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const a = await getAnswers(token)
+      setAnswers(a)
+      setSent(Object.entries(a).length > 0)
+    }
+    fetchAnswers()
+  }, [token])
+
+
   const router = useRouter()
 
   /**
@@ -51,8 +63,13 @@ export default function QuestionCard({questions, token}: { questions: any, token
 
   }
 
-  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
+  function optionChecked(question: string, option: string) {
+    if (!Object.keys(answers).includes(question)) return false;
+    // @ts-ignore
+    return answers[question] === option;
+  }
 
+  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
   return (
       <form id="questions" className="col col-md-11 col-lg-10" onSubmit={async (e) => await SubmitAnswers(e)}>
         {Object.keys(questions).map((question: string) => (
@@ -66,6 +83,7 @@ export default function QuestionCard({questions, token}: { questions: any, token
                       <input type="radio" id={question + option} name={question}
                              className={"form-check-input"}
                              disabled={sent}
+                             defaultChecked={optionChecked(question, option)}
                              value={option}/>
                       <label className={"form-check-label ps-1 " + style.label}
                              htmlFor={question + option}>{option}</label>
@@ -76,7 +94,20 @@ export default function QuestionCard({questions, token}: { questions: any, token
         ))
         }
         <p className="error text-danger-emphasis"></p>
-        {sent ? null : <button className="btn btn-success btn-lg mb-4" type="submit">{tr.save}</button>}
+        <button className="btn btn-success btn-lg mb-4" type="submit">{tr.save}</button>
       </form>
   )
+}
+
+async function getAnswers(token: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/answers`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
+    },
+    cache: 'reload'
+  })
+  if (!res.ok) return {}
+  return await res.json() as {}
 }
