@@ -2,10 +2,14 @@ import Script from 'next/script'
 import styles from '@/styles/auth.module.css'
 import translations from '@/i18n.json'
 import {Translation} from "@/types/translations";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 export const runtime = 'edge'
 
 export default async function Page() {
+  let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  if (token) return redirect('/questions');
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (

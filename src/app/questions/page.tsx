@@ -1,9 +1,6 @@
-import Script from 'next/script'
 import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
-import translations from '@/i18n.json'
-import {Translation} from "@/types/translations";
-import style from "@/styles/questions.module.css"
+import QuestionCard from "@/components/questions/QuestionCard";
 
 export const runtime = 'edge'
 
@@ -14,71 +11,45 @@ class HttpError extends Error {
 }
 
 export default async function Page() {
-  const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
-  let token = cookies().get('token')?.value as string
-  // Redirect to /register if token not set
-  if (!token) redirect('/register');
-  token = JSON.parse(token).token
-  try {
-    const questions = await getQuestions(`${token}`);
-    return (
-        <div className="row justify-content-center">
-          <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.NEXT_PUBLIC_API}/answers`}>
-            {Object.keys(questions).map((question: string) => (
-                <div key={question} className="card my-4">
-                  <div className="card-header">
-                    {tr.question} {question}
-                  </div>
-                  <div className="card-body">
-                    {questions[question].map((option: string) => (
-                        <div key={option} className="form-check py-1 fs-5">
-                          <input type="radio" id={question + option} name={question}
-                                 className="form-check-input"
-                                 value={option}/>
-                          <label className={"form-check-label ps-1 " + style.label}
-                                 htmlFor={question + option}>{option}</label>
-                        </div>
-                    ))}
-                  </div>
-                </div>
-            ))
-            }
-            <p className="error text-danger-emphasis"></p>
-            <button className="btn btn-success btn-lg mb-4" id="submit-btn" type="submit">{tr.save}</button>
-            <Script src="/questions.js" defer/>
-          </form>
-        </div>
-    )
-  } catch (e) {
-    // send Error to sendError() if the Error is network-related
-    if ((e instanceof HttpError)) return sendError(e)
-    throw e
-  }
-}
+  let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+  if (!token) return redirect('/register');
 
-function sendError(e: HttpError) {
-  console.error(e);
-  switch (e.code) {
-    case 401:
-      e.message = 'Your account has expired. Please re-register to continue accessing the service.'
+  let questions;
+  try {
+    questions = await getQuestions(`${token}`);
+  } catch (e) {
+    console.error(e);
+    if ((e instanceof HttpError)) {
+      switch (e.code) {
+        case 401:
+          e.message = 'Your account has expired. Please re-register to continue accessing the service.'
+      }
+
+      return (
+          <div className="alert alert-danger">
+            <h1>An error occurred</h1>
+            <p>{e.message}</p>
+          </div>
+      )
+    }
+    throw e
   }
 
   return (
-      <div className="alert alert-danger">
-        <h1>An error occurred</h1>
-        <p>{e.message}</p>
-      </div>
-  )
+        <div className="row justify-content-center">
+          <QuestionCard questions={questions} token={token}/>
+        </div>
+    )
 }
 
 async function getQuestions(token: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
+  const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    cache: "reload"
+    cache: "default"
   })
 
   if (!res.ok) throw new HttpError(res.status, res.statusText);

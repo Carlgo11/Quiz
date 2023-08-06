@@ -1,6 +1,6 @@
 import {cookies} from "next/headers";
-import LoginPage from "@/components/Login";
-import QuestionsList from "@/components/Questions";
+import LoginPage from "@/components/admin/Login";
+import QuestionsList from "@/components/admin/questions/Questions";
 import '../layout'
 export const runtime = 'edge';
 

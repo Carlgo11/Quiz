@@ -1,6 +1,6 @@
 import Script from "next/script";
 import '@/styles/global.css'
-import {NavBar} from "@/components/NavBar";
+import {NavBar} from "@/components/admin/NavBar";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Metadata} from "next";
 

@@ -1,3 +1,11 @@
 .label {
   opacity: 1 !important;
 }
+
+.header {
+  font-size: 1.25em;
+  line-height: 1.25em;
+  opacity: .9;
+}
+
+

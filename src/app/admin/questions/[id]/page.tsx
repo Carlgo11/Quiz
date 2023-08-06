@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import React from "react";
-import Question from "@/components/EditQuestion";
+import Question from "@/components/admin/questions/EditQuestion";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
 
