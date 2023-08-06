@@ -52,6 +52,8 @@ form.addEventListener('submit', async function (e) {
 
     // Disable the form inputs
     formInputs.forEach((input) => input.disabled = true);
+    const btn = document.querySelector('#submit-btn').style.display = "none";
+  // window.location.replace('/answers')
 })
 
 // On page load, populate form inputs with stored values

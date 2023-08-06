@@ -10,3 +10,11 @@ a {
 .q-delete-btn:hover {
   opacity: 0.9;
 }
+
+input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+
+label {
+  width: 100%;
+}

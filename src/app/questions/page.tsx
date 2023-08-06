@@ -3,6 +3,7 @@ import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
 import translations from '@/i18n.json'
 import {Translation} from "@/types/translations";
+import style from "@/styles/questions.module.css"
 
 export const runtime = 'edge'
 
@@ -23,19 +24,19 @@ export default async function Page() {
     return (
         <div className="row justify-content-center">
           <form id="questions" className="col col-md-11 col-lg-10" action={`${process.env.NEXT_PUBLIC_API}/answers`}>
-            {Object.keys(questions).map((key: string) => (
-                <div key={key} className="card my-4">
+            {Object.keys(questions).map((question: string) => (
+                <div key={question} className="card my-4">
                   <div className="card-header">
-                    {tr.question} {key}
+                    {tr.question} {question}
                   </div>
                   <div className="card-body">
-                    {questions[key].map((option: string) => (
-                        <div key={option} className="form-check">
-                          <input type="radio" id={key + option} name={key}
+                    {questions[question].map((option: string) => (
+                        <div key={option} className="form-check py-1 fs-5">
+                          <input type="radio" id={question + option} name={question}
                                  className="form-check-input"
                                  value={option}/>
-                          <label className="form-check-label"
-                                 htmlFor={key + option}>{option}</label>
+                          <label className={"form-check-label ps-1 " + style.label}
+                                 htmlFor={question + option}>{option}</label>
                         </div>
                     ))}
                   </div>
@@ -43,7 +44,7 @@ export default async function Page() {
             ))
             }
             <p className="error text-danger-emphasis"></p>
-            <button className="btn btn-success btn-lg" type="submit">{tr.save}</button>
+            <button className="btn btn-success btn-lg mb-4" id="submit-btn" type="submit">{tr.save}</button>
             <Script src="/questions.js" defer/>
           </form>
         </div>
