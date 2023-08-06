@@ -1,4 +1,4 @@
-import {DropDown} from "@/components/ProfileBtn";
+import {DropDown} from "@/components/admin/ProfileBtn";
 import {cookies} from "next/headers";
 import translations from "@/i18n.json";
 import {Translation} from "@/types/translations";

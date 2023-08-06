@@ -13,7 +13,7 @@ export default async function Page() {
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
-      <div className={styles.outerForm}>
+      <div className="outerForm">
         <form className="col col-md-8 col-lg-6" id="register" method="POST" action={`${process.env.API}/teams`}>
           <h1 className={styles.header}>{tr.enter_name}</h1>
           <hr/>
