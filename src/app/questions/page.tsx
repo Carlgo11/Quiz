@@ -1,6 +1,6 @@
 import {cookies} from "next/headers"
 import {redirect} from 'next/navigation';
-import QuestionCard from "@/components/questions/QuestionCard";
+import QuestionsList from "@/components/questions/QuestionsList";
 
 export const runtime = 'edge'
 
@@ -12,6 +12,7 @@ class HttpError extends Error {
 
 export default async function Page() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
+
   if (!token) return redirect('/register');
 
   let questions;
@@ -37,7 +38,7 @@ export default async function Page() {
 
   return (
         <div className="row justify-content-center">
-          <QuestionCard questions={questions} token={token}/>
+          <QuestionsList questions={questions} token={token}/>
         </div>
     )
 }
@@ -53,7 +54,6 @@ async function getQuestions(token: string) {
   })
 
   if (!res.ok) throw new HttpError(res.status, res.statusText);
-
-  return res.json()
+  return (await res.json()) as {[key: string]: string[]}
 }
 
