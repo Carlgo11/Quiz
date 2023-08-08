@@ -61,7 +61,7 @@ export default function LoginPage() {
 
   return (
       <div className="outerForm">
-        <form className="col col-md-8 col-lg-6" onSubmit={
+        <form className="col-11 col-md-8 col-lg-6" onSubmit={
           async (e) => {
             // @ts-ignore
             if (await sendForm(e, process.env.NEXT_PUBLIC_API))

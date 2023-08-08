@@ -14,7 +14,7 @@ export default async function Page() {
 
   return (
       <div className="outerForm">
-        <form className="col col-md-8 col-lg-6" id="register" method="POST" action={`${process.env.API}/teams`}>
+        <form className="col-11 col-md-8 col-lg-6" id="register" method="POST" action={`${process.env.API}/teams`}>
           <h1 className={styles.header}>{tr.enter_name}</h1>
           <hr/>
           <div className="mb-3">
