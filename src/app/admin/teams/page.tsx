@@ -3,6 +3,7 @@ import {cookies} from "next/headers";
 import styles from '@/styles/teams.module.css'
 import {Translation} from "@/types/translations";
 import {redirect} from "next/navigation";
+import {DeleteBtn} from "@/components/admin/teams/DeleteBtn";
 
 async function getTeams(token: string) {
   const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API}/teams`, {
@@ -38,7 +39,9 @@ export default async function TeamsPage() {
         <h1>{tr.teams}</h1>
         {Object.keys(teams).map((team: string) => (
             <div key={team} className="card mt-4">
-              <div className={"card-header " + styles.team}>{team}</div>
+              <div className={"card-header " + styles.team}>{team}
+                <DeleteBtn token={token} team={team}/>
+              </div>
           <div className={"card-body row row-cols-6 " + styles.questions}>
                 {Object.keys(teams[team]).map((q) =>
                     parseInt(q) ? <Question key={q} answer={teams[team][q].answer} question={{correct: teams[team][q].correct as boolean, name: parseInt(q)}}/> : null )}

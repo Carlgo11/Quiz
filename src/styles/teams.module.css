@@ -13,6 +13,10 @@ padding: 1rem 0;
   color: var(--bs-secondary-color);
 }
 
+.qDeleteBtn {
+  position: absolute;
+  right: 1em;
+}
 
 .q_name {
   margin-bottom: 0;
