@@ -2,11 +2,11 @@ import {DropDown} from "@/components/admin/ProfileBtn";
 import {cookies} from "next/headers";
 import translations from "@/i18n.json";
 import {Translation} from "@/types/translations";
-import jwt_decode from "jwt-decode";
+import jwt_decode, {JwtPayload} from "jwt-decode";
 
 export const NavBar = () => {
   const token: string|undefined = cookies().get('admin-token')?.value
-  const token_decoded: any = token ? jwt_decode(token || '') : {}
+  const token_decoded: JwtPayload = token ? jwt_decode<JwtPayload>(token || '') : {}
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
@@ -25,7 +25,7 @@ export const NavBar = () => {
                     </li>
                   </ul>
                 </div>
-                <DropDown user={token_decoded.user}/></>
+                <DropDown user={token_decoded.sub as string}/></>
             ) : null}
         </div>
       </nav>

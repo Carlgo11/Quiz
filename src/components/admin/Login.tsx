@@ -6,7 +6,7 @@ import {Translation} from "@/types/translations";
 
 async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
 
-  const form: any | null = event.target
+  const form: HTMLFormElement | null = event.target as HTMLFormElement
   if (form === null) return null;
   event.preventDefault()
 

@@ -15,14 +15,9 @@ export const DropDown = ({user}: {user: string}) => {
           {user}
         </a>
         <ul className="dropdown-menu">
-          {/*<li><a className="dropdown-item" href="#">Action</a></li>
-          <li><a className="dropdown-item" href="#">Another action</a></li>
-          <li><hr className="dropdown-divider"/></li>*/}
-          {/* onClick={(e) => router.push('/admin/logout')}*/}
           <li><a className="dropdown-item" href="/admin/logout">{tr.logout}</a></li>
         </ul>
       </li>
-
     </ul>
   </div>)
 }

@@ -49,12 +49,12 @@ export default function EditQuestion({params, data, token}: {
     return res.ok
   }
 
-  const handleIncreaseOptions = (event: Event) => {
+  const handleIncreaseOptions = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLength(length + 1);
   };
 
-  const handleDecreaseOptions = (event: Event) => {
+  const handleDecreaseOptions = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLength(length - 1);
   };
@@ -85,9 +85,11 @@ export default function EditQuestion({params, data, token}: {
                          defaultValue={data[index] || ""} required/>
                 </div>
             ))}
-            <button className={styles.plusMinusBtn} onClick={(e: any) => handleIncreaseOptions(e)}>+
+            <button className={styles.plusMinusBtn}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleIncreaseOptions(e)}>+
             </button>
-            <button className={styles.plusMinusBtn} onClick={(e: any) => handleDecreaseOptions(e)}>-
+            <button className={styles.plusMinusBtn}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleDecreaseOptions(e)}>-
             </button>
             <button type="submit">{tr.save}</button>
           </div>
