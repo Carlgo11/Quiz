@@ -6,14 +6,14 @@ import jwt_decode, {JwtPayload} from "jwt-decode";
 
 export const NavBar = () => {
   const token: string|undefined = cookies().get('admin-token')?.value
-  const token_decoded: JwtPayload = token ? jwt_decode<JwtPayload>(token || '') : {}
+  const jwtPayload: JwtPayload = token ? jwt_decode<JwtPayload>(token || '') : {}
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
 
   return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div className="container">
           <a className="navbar-brand" href="#">Quiz Admin Panel</a>
-          {Object.keys(token_decoded).includes('user') ? (
+          {Object.keys(jwtPayload).includes('sub') ? (
               <>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -25,7 +25,7 @@ export const NavBar = () => {
                     </li>
                   </ul>
                 </div>
-                <DropDown user={token_decoded.sub as string}/></>
+                <DropDown user={jwtPayload.sub as string}/></>
             ) : null}
         </div>
       </nav>
