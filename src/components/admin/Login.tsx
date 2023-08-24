@@ -4,7 +4,7 @@ import {FormEvent} from "react";
 import translations from "@/i18n.json";
 import {Translation} from "@/types/translations";
 
-async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
+async function sendForm(event: FormEvent, url: string, method: string = 'POST') {
 
   const form: HTMLFormElement | null = event.target as HTMLFormElement
   if (form === null) return null;
@@ -27,7 +27,7 @@ async function sendForm(event: FormEvent, url: string, method: string = 'PUT') {
     if (!res.ok) {
       // Try and validate user instead of creating user if status eql conflict
       if (res.status === 409)
-        return sendForm(event, url, 'POST')
+        return sendForm(event, url, 'GET')
 
       // Unless error is due to a user conflict, output error to DOM & console
       const {error} = await res.json();
