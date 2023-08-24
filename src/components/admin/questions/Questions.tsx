@@ -3,6 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import DeleteButton from "./DeleteQuestion";
 import translations from '@/i18n.json'
 import {Translation} from "@/types/translations";
+import {redirect} from "next/navigation";
 
 const fetchQuestions = async (token: string) => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API}/questions`, {
@@ -13,10 +14,8 @@ const fetchQuestions = async (token: string) => {
     cache: "no-cache"
   });
   if (!data.ok) {
-    if (data.status === 401)
-      window.location.href = '/admin/logout'
-    if (data.status === 403)
-      window.location.reload()
+    if (data.status === 401 || data.status === 403)
+      redirect('/admin/logout')
     console.log(`domain: ${data.url}`)
     console.error(await data.text())
     return false;
