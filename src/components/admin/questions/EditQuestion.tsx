@@ -6,13 +6,13 @@ import {useRouter} from 'next/navigation'
 import translations from "@/i18n.json";
 import {Translation} from "@/types/translations";
 
-export default function EditQuestion({params, data, token}: {
-  params: { id: string },
+export default function EditQuestion({id, data, token}: {
+  id: number,
   data: Array<string>,
   token: string
 }) {
   const tr: Translation = (translations as Record<string, Translation>)[process.env.NEXT_PUBLIC_LANGUAGE || 'en'] || {};
-  const HandleSubmit = async (event: FormEvent, id: string, uri: string | undefined) => {
+  const HandleSubmit = async (event: FormEvent, id: number, uri: string | undefined) => {
 
     const form: HTMLFormElement | null = document.querySelector('#question')
     if (form === null) return null;
@@ -45,7 +45,13 @@ export default function EditQuestion({params, data, token}: {
       body: JSON.stringify(data),
       cache: "no-cache"
     })
-    if (!res.ok) throw res.status
+    if (!res.ok) {
+      // @ts-ignore
+      const errorElem: Element = document.querySelector('.error')
+      const {error} = await res.json();
+      errorElem.textContent = error
+      throw res.status
+    }
     return res.ok
   }
 
@@ -65,13 +71,13 @@ export default function EditQuestion({params, data, token}: {
   return (
       <form key="a" id="question" onSubmit={
         async (e) => {
-          if (await HandleSubmit(e, params.id, process.env.NEXT_PUBLIC_API))
+          if (await HandleSubmit(e, id, process.env.NEXT_PUBLIC_API))
             router.push("/admin/questions")
         }
       }>
         <div className="card">
           <div className="card-header">
-            {tr.question} {params.id}
+            {tr.question} {id}
           </div>
           <div className="card-body">
             {Array.from({length: length}).map((_, index) => (
@@ -91,6 +97,7 @@ export default function EditQuestion({params, data, token}: {
             <button className={styles.plusMinusBtn}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleDecreaseOptions(e)}>-
             </button>
+            <p className="error text-danger text-danger-emphasis mb-3"></p>
             <button type="submit">{tr.save}</button>
           </div>
         </div>
