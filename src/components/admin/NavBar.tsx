@@ -12,7 +12,7 @@ export const NavBar = () => {
   return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div className="container">
-          <a className="navbar-brand" href="#">Quiz Admin Panel</a>
+          <a className="navbar-brand" href="/admin/">Quiz Admin Panel</a>
           {Object.keys(jwtPayload).includes('sub') ? (
               <>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
