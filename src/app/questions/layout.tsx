@@ -15,6 +15,7 @@ export default function RootLayout({children,}: {
       <html lang="en">
       <head>
         <Script src="/color-mode.js"></Script>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
       </head>
       <body suppressHydrationWarning={true}>
       <div className="container 100vh">{children}</div>
