@@ -4,9 +4,10 @@ import translations from '@/i18n.json'
 import {Translation} from "@/types/translations";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
+import {Roboto} from "next/font/google";
 
 export const runtime = 'edge'
-
+const roboto = Roboto({ subsets: ['latin'], weight: '300'})
 export default async function Page() {
   let {token} = JSON.parse(cookies().get('token')?.value || "{}" as string)
   if (token) return redirect('/questions');
@@ -15,7 +16,7 @@ export default async function Page() {
   return (
       <div className="outerForm">
         <form className="col-11 col-md-8 col-lg-6" id="register" method="POST" action={`${process.env.API}/teams`}>
-          <h1 className={styles.header}>{tr.enter_name}</h1>
+          <h1 className={styles.header + ' ' + roboto.className}>{tr.enter_name}</h1>
           <hr/>
           <div className="mb-3">
             <input name="username" className="form-control" placeholder={tr.team_name}/>

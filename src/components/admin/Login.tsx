@@ -3,7 +3,9 @@ import styles from "@/styles/auth.module.css";
 import {FormEvent} from "react";
 import translations from "@/i18n.json";
 import {Translation} from "@/types/translations";
+import {Roboto} from "next/font/google";
 
+const roboto = Roboto({ subsets: ['latin'], weight: '300'})
 async function sendForm(event: FormEvent, url: string, method: string = 'POST') {
 
   const form: HTMLFormElement | null = event.target as HTMLFormElement
@@ -68,7 +70,7 @@ export default function LoginPage() {
               window.location.replace('/admin/questions/')
           }
         }>
-          <h1 className={styles.header}>{tr.login}</h1>
+          <h1 className={styles.header + ' ' + roboto.className}>{tr.login}</h1>
           <hr/>
           <input name="username" type="username" className="form-control mb-2" placeholder={tr.username} required
                  maxLength={16} pattern="[A-z0-9]{1,16}" title="Only letters and numbers allowed"/>
